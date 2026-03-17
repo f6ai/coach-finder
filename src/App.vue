@@ -1,7 +1,18 @@
 <template>
- <router-link></router-link>
+    <TheHeader />
+    <router-view></router-view>
 </template>
 
-<script setup></script>
+<script>
+import TheHeader from './components/layout/TheHeader.vue';
 
-<style scoped></style>
+export default {
+    components: {
+        TheHeader
+    }
+}
+</script>
+
+<style>
+@import './assets/styles/app.css';
+</style>
