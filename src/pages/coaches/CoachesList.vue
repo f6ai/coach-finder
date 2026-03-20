@@ -3,21 +3,24 @@
         FILTER
     </section>
     <section>
-        <div class="controls">
-            <button type="button">Refresh</button>
-            <router-link to="/register">Register as a coach</router-link>
-        </div>
-        <ul v-if="hasCoaches">
-            <CoachItem v-for="coach in filteredCoaches" :key="coach.id" :firstName="coach.firstName"
-                :lastName="coach.lastName" :id="coach.id" :rate="coach.hourlyRate" :areas="coach.areas">
-            </CoachItem>
-        </ul>
-        <h3 v-else>No coaches found.</h3>
+        <BaseCard>
+            <div class="controls">
+                <BaseButton :mode="'outline'">Refresh</BaseButton>
+                <BaseButton link>Register as a coach</BaseButton>
+            </div>
+            <ul v-if="hasCoaches">
+                <CoachItem v-for="coach in filteredCoaches" :key="coach.id" :firstName="coach.firstName"
+                    :lastName="coach.lastName" :id="coach.id" :rate="coach.hourlyRate" :areas="coach.areas">
+                </CoachItem>
+            </ul>
+            <h3 v-else>No coaches found.</h3>
+        </BaseCard>
     </section>
 </template>
 
 <script>
 import CoachItem from '@/components/coaches/CoachItem.vue';
+import BaseCard from '@/components/ui/BaseCard.vue';
 
 export default {
     components: {
