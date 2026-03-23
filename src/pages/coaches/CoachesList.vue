@@ -20,7 +20,6 @@
 
 <script>
 import CoachItem from '@/components/coaches/CoachItem.vue';
-import BaseCard from '@/components/ui/BaseCard.vue';
 
 export default {
     components: {
