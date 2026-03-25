@@ -6,7 +6,7 @@
         <BaseCard>
             <div class="controls">
                 <BaseButton :mode="'outline'">Refresh</BaseButton>
-                <BaseButton link>Register as a coach</BaseButton>
+                <BaseButton v-if="isCoach" link :to="'/register'">Register as a coach</BaseButton>
             </div>
             <ul v-if="hasCoaches">
                 <CoachItem v-for="coach in filteredCoaches" :key="coach.id" :firstName="coach.firstName"
@@ -37,11 +37,15 @@ export default {
         }
     },
     computed: {
+        isCoach() {
+            return this.$state.getters['coaches/isCoach']
+        }
+    },
+    computed: {
         filteredCoaches() {
             // coaches/coaches -> first is the namespace second is the getter name
             const coaches = this.$store.getters['coaches/coaches']
             return coaches.filter(coach => {
-                console.log(coach)
                 if (this.activeFilters.frontend && coach.areas.includes('frontend')) {
                     return true
                 }
