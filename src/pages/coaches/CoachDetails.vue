@@ -9,19 +9,19 @@
       <BaseCard>
          <header>
             <h2>Interested? Reach out now!</h2>
-            <BaseButton link :to="contactLink">Contact</BaseButton>
+            <!-- <BaseButton link :to="contactLink">Contact</BaseButton> -->
          </header>
+
          <router-view></router-view>
       </BaseCard>
+
       <section>
          <BaseCard>
             <BaseBadge :type="area" :title="area" v-for="area in areas" :key="area"></BaseBadge>
             <p>{{ description }}</p>
          </BaseCard>
-
       </section>
    </section>
-
 </template>
 
 <script>
