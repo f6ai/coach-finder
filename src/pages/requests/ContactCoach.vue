@@ -43,8 +43,8 @@ export default {
             }
 
             this.$store.dispatch('requests/contactCoach', {
-                email: this.email,
-                message: this.message,
+                email: this.email.val,
+                message: this.message.val,
                 coachId: this.$route.params.id
             })
 

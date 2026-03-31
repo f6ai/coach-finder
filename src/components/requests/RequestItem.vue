@@ -1,4 +1,4 @@
-í<template>
+<template>
     <li>
         <div>
             <a :href="emailLink">{{ email }}</a>
@@ -7,7 +7,7 @@
     </li>
 </template>
 
-í
+
 <script>
 export default {
     props: ['email', 'message'],
@@ -20,7 +20,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 li {
     margin: 1rem 0;
     border: 1px solid #ccc;

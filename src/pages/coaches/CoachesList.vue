@@ -1,14 +1,20 @@
 <template>
+    <BaseDialog :show="!!error" title="An error occurred!" @close="handleError">
+        <p>{{ error }}</p>
+    </BaseDialog>
     <section>
         <CoachFilter @change-filter="setFilters" </CoachFilter>
     </section>
     <section>
         <BaseCard>
             <div class="controls">
-                <BaseButton :mode="'outline'">Refresh</BaseButton>
-                <BaseButton v-if="!isCoach" link :to="'/register'">Register as a coach</BaseButton>
+                <BaseButton :mode="'outline'" @click="loadCoaches">Refresh</BaseButton>
+                <BaseButton v-if="!isCoach && !this.isLoading" link :to="'/register'">Register as a coach</BaseButton>
             </div>
-            <ul v-if="hasCoaches">
+            <div v-if="isLoading">
+                <BaseSpinner></BaseSpinner>
+            </div>
+            <ul v-else-if="hasCoaches">
                 <CoachItem v-for="coach in filteredCoaches" :key="coach.id" :firstName="coach.firstName"
                     :lastName="coach.lastName" :id="coach.id" :rate="coach.hourlyRate" :areas="coach.areas">
                 </CoachItem>
@@ -29,6 +35,8 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
+            error: null,
             activeFilters: {
                 frontend: true,
                 backend: true,
@@ -57,12 +65,28 @@ export default {
             })
         },
         hasCoaches() {
-            return this.$store.getters['coaches/hasCoaches']
+            return !this.isLoading && this.$store.getters['coaches/hasCoaches']
         }
     },
+    created() {
+        this.loadCoaches()
+    },
     methods: {
+        async loadCoaches() {
+            this.isLoading = true
+            try {
+                await this.$store.dispatch('coaches/loadCoaches')
+            }
+            catch (error) {
+                this.error = error.message || 'Something went wrong.'
+            }
+            this.isLoading = false
+        },
         setFilters(updatedFilters) {
             this.activeFilters = updatedFilters;
+        },
+        handleError() {
+            this.error = null
         }
     }
 }
