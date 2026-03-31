@@ -36,8 +36,6 @@ export default {
     },
     computed: {
         receivedRequests() {
-            const requests = this.$store.getters['requests/requests']
-            console.log(requests)
             return this.$store.getters['requests/requests']
         },
         hasRequests() {
@@ -51,7 +49,7 @@ export default {
         async loadRequests() {
             this.isLoading = true
             try {
-                await this.$store.dispatch(['requests/fetchRequests'])
+                await this.$store.dispatch('requests/fetchRequests')
             } catch (error) {
                 this.error = error.message || 'Something failed!'
             }
