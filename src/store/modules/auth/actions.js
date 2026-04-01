@@ -1,10 +1,13 @@
+const firebaseConfig = {
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+};
+
 export default {
     login() {
 
     },
     async signup(context, payload) {
-        const API_KEY = "AIzaSyA7EYVx2I3XWHtfHkVUq8wNzke__F69QsQ"
-        const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`, {
+        const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${firebaseConfig.apiKey}`, {
             method: 'POST',
             body: JSON.stringify({
                 email: payload.email,
