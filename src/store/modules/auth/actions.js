@@ -3,8 +3,28 @@ const firebaseConfig = {
 };
 
 export default {
-    login() {
+    async login(context, payload) {
+        const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseConfig.apiKey}`, {
+            method: 'POST',
+            body: JSON.stringify({
+                email: payload.email,
+                password: payload.password,
+                returnSecureToken: true
+            })
+        })
 
+        const responseData = await res.json()
+
+        if (!res.ok) {
+            const error = new Error(`Failed to log in ${responseData.error.message}`)
+            throw error
+        }
+
+        context.commit('setUser', {
+            token: responseData.idToken,
+            userId: responseData.localId,
+            tokenExpiration: responseData.expiresIn
+        })
     },
     async signup(context, payload) {
         const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${firebaseConfig.apiKey}`, {
