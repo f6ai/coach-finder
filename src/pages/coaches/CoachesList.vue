@@ -9,7 +9,9 @@
         <BaseCard>
             <div class="controls">
                 <BaseButton :mode="'outline'" @click="loadCoaches(true)">Refresh</BaseButton>
-                <BaseButton v-if="!isCoach && !this.isLoading" link :to="'/register'">Register as a coach</BaseButton>
+                <BaseButton v-if="!isLoggedIn" link :to="'/auth'">Login</BaseButton>
+                <BaseButton v-if="isLoggedIn && !isCoach && !isLoading" link :to="'/register'">Register as a coach
+                </BaseButton>
             </div>
             <div v-if="isLoading">
                 <BaseSpinner></BaseSpinner>
@@ -47,6 +49,9 @@ export default {
     computed: {
         isCoach() {
             return this.$store.getters['coaches/isCoach']
+        },
+        isLoggedIn() {
+            return this.$store.getters.isAuthenticated
         },
         filteredCoaches() {
             // coaches/coaches -> first is the namespace second is the getter name
